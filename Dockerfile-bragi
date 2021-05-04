@@ -1,0 +1,38 @@
+FROM node:lts-slim AS build
+
+# Get wget for the next step
+RUN apt-get update
+RUN apt-get install wget gnupg procps -y
+
+# Chrome for testing
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+RUN apt-get update && apt-get install -yq google-chrome-stable
+
+WORKDIR /bragi
+
+ENV PATH /bragi/node_modules/.bin:$PATH
+
+# Install and cache app dependencies
+COPY ./src/bragi/package.json /bragi/package.json
+RUN yarn
+RUN yarn global add @angular/cli@^11.0.0
+
+# Copy project files
+COPY ./src/bragi /bragi
+
+# Angular tests
+RUN ng test --watch=false
+RUN ng e2e --port 4202
+
+# Compile static content
+RUN ng build --output-path=dist
+
+# Serve static content with nginx
+FROM nginx:mainline-alpine
+
+COPY --from=build /bragi/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

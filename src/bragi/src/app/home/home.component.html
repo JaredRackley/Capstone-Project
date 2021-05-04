@@ -1,0 +1,10 @@
+<ng-container *ngFor="let stream of sort()">
+  <stream-box
+    *ngIf="definedStream(stream)"
+    [category]="stream.category"
+    [streamName]="stream.streamName"
+    [profilePic]="stream.profilePic"
+    [streamer]="stream.username"
+    [thumbnail]="stream.thumbnail"
+  ></stream-box>
+</ng-container>

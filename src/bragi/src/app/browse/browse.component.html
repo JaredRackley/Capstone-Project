@@ -1,0 +1,21 @@
+<h2>Categories</h2>
+<ng-container *ngIf="!category; else categorySelected">
+  <category-box
+    *ngFor="let c of categories"
+    [categoryName]="c"
+    [filter]="filter"
+    categoryImage="{{ dataParser.server.url }}/{{ c }}.jpg"
+  >
+  </category-box>
+</ng-container>
+
+<ng-template #categorySelected>
+  <stream-box
+    *ngFor="let stream of this.streamsFiltered"
+    [category]="stream.category"
+    [streamName]="stream.streamName"
+    [profilePic]="stream.profilePic"
+    [streamer]="stream.username"
+    [thumbnail]="stream.thumbnail"
+  ></stream-box>
+</ng-template>

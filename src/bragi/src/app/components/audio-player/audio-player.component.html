@@ -1,0 +1,27 @@
+<div
+  class="audio-container"
+  [ngStyle]="{
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '24px'
+  }"
+>
+  <audio
+    id="my-video"
+    class="video-js vjs-default-button vjs-big-play-centered"
+    controls
+    playsinline
+    preload="auto"
+    [ngStyle]="{ width: width, height: height }"
+  >
+    <source src="{{ this.url }}" type="audio/m3u8" />
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank"
+        >supports HTML5 video</a
+      >
+    </p>
+  </audio>
+</div>

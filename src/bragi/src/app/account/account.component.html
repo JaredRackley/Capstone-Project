@@ -1,0 +1,74 @@
+<div
+  class="account-container"
+  *ngIf="this.authenticated; else NotAuthenticated"
+>
+  <h1>Welcome {{ user?.displayName }}</h1>
+  <img id="account-profile-pic" [src]="user?.photoURL" alt="profile pic" />
+  <ng-template *ngIf="user?.photoURL">
+    <h2>No Profile Picture detected. Please upload one below:</h2>
+  </ng-template>
+  <mat-file-upload
+    [labelText]="'Upload Profile Picture:'"
+    [selectButtonText]="'Choose File'"
+    selectFilesButtonType="button"
+    [uploadButtonText]="'Upload'"
+    uploadButtonType="submit"
+    [allowMultipleFiles]="false"
+    [showUploadButton]="true"
+    [acceptedTypes]="'.png, .jpg, .jpeg'"
+    (uploadClicked)="onProfileUploadClicked($event)"
+  ></mat-file-upload>
+  <span *ngIf="thumbnail; else noThumbnail">
+    <h2>This is the current thumbnail:</h2>
+    <img id="current-thumbnail" [src]="thumbnail" alt="thumbnail" />
+  </span>
+
+  <ng-template #noThumbnail>
+    <h2>No thumbnail detected. Please upload one below:</h2>
+  </ng-template>
+  <mat-file-upload
+    [labelText]="'Upload Thumbnail:'"
+    [selectButtonText]="'Choose File'"
+    selectFilesButtonType="button"
+    [uploadButtonText]="'Upload'"
+    uploadButtonType="submit"
+    [allowMultipleFiles]="false"
+    [showUploadButton]="true"
+    [acceptedTypes]="'.png, .jpg, .jpeg'"
+    (uploadClicked)="onUploadClicked($event)"
+  ></mat-file-upload>
+  <form [formGroup]="startStreamForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Stream Name</mat-label>
+      <input
+        matInput
+        formControlName="streamName"
+        placeholder="retro screaming, fancy asmr..."
+      />
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Category</mat-label>
+      <input
+        matInput
+        formControlName="category"
+        placeholder="screaming, asmr, gaming..."
+      />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      [ngStyle]="{ backgroundColor: '#ffc000' }"
+      type="submit"
+      value="submit"
+    >
+      <mat-icon [ngStyle]="{ color: '#ae0000' }" class="account-icon"
+        >play_arrow</mat-icon
+      >
+      Start Stream
+    </button>
+  </form>
+</div>
+
+<ng-template #NotAuthenticated>
+  <h1 class="not-auth-text">Please Sign in to see your account info</h1>
+</ng-template>

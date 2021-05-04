@@ -1,0 +1,11 @@
+{
+    "/streams": {
+        "target": "http://184.72.103.90:42069/streams/active",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/streams": ""
+          }
+    }
+}

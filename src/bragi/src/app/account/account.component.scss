@@ -1,0 +1,45 @@
+.not-auth-text {
+    text-align: center;
+    margin-right: 12px;
+}
+
+.account-container {
+    width: 50%;
+    margin: 0 auto;
+}
+
+img, button {
+    display: block;
+    align-items: center;
+    margin: 12px;
+}
+
+.account-icon {
+    display: inline;
+    position: relative;
+    white-space: nowrap;
+    background-color: #ffc000;
+    border-radius: 16px;
+}
+
+#current-thumbnail {
+    min-width: 230px;
+    width: 230px;
+    min-height: 150px;
+    height: 150px;
+}
+
+#account-profile-pic {
+  width: 100px;
+  height:100px;
+  border-radius: 100px;
+}
+
+mat-form-field {
+    display: block;
+    margin-bottom: 24px;
+}
+
+form {
+    margin-top: 24px;
+}

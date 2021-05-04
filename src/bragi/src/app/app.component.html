@@ -1,0 +1,128 @@
+<mat-toolbar class="menu mat-elevation-z6" color="primary">
+  <a [routerLink]="['/']" class="title">Sound Stream</a>
+  <a [routerLink]="['/browse']">Browse</a>
+  <a [routerLink]="['/account']">Account</a>
+  <span class="menu-icons">
+    <!-- <mat-icon aria-hidden="false" aria-label="Login">login</mat-icon> -->
+    <div class="options">
+      <div *ngIf="this.userData as user" class="options">
+        <div class="username-display">
+        {{ user.displayName }}
+      </div>
+      <img id="account-profile-pic" [src]="user?.photoURL" (click)="this.optionsShowing = !this.optionsShowing"/>
+      </div>
+      <mat-icon
+        *ngIf="!this.userData"
+        aria-hidden="false"
+        aria-label="User"
+        (click)="this.optionsShowing = !this.optionsShowing"
+      >
+        person
+      </mat-icon>
+    </div>
+  </span>
+</mat-toolbar>
+
+<mat-list *ngIf="this.optionsShowing" class="user-options">
+  <mat-list-item>
+    <mat-icon aria-hidden="false" aria-label="menu item">
+      brightness_medium
+    </mat-icon>
+    &nbsp;&nbsp;&nbsp; Dark Mode
+  </mat-list-item>
+  <mat-list-item
+    *ngIf="!this.userData"
+    [routerLink]="['/signup']"
+    (click)="this.optionsShowing = false"
+  >
+    <mat-icon aria-hidden="false" aria-label="menu item"> person_add </mat-icon>
+    &nbsp;&nbsp;&nbsp; Register
+  </mat-list-item>
+  <mat-list-item
+    *ngIf="!this.userData"
+    [routerLink]="['/login']"
+    (click)="this.optionsShowing = false"
+  >
+    <mat-icon aria-hidden="false" aria-label="menu item"> login </mat-icon>
+    &nbsp;&nbsp;&nbsp; Login
+  </mat-list-item>
+  <mat-list-item
+    *ngIf="this.userData"
+    (click)="authService.SignOut(); this.optionsShowing = false"
+  >
+    <mat-icon aria-hidden="false" aria-label="menu item"> logout </mat-icon>
+    &nbsp;&nbsp;&nbsp; Logout
+  </mat-list-item>
+</mat-list>
+
+<!-- <mat-list *ngIf="this.optionsShowing" class="user-options mat-elevation-z6">
+    <mat-list-item
+      *ngFor="let menuItem of menuItems"
+      [routerLink]="menuItem.route"
+    >
+    <mat-icon aria-hidden="false" aria-label="menu item">
+      person_add
+    </mat-icon>
+    &nbsp;&nbsp;&nbsp;
+      <span>{{ menuItem.option }}</span>
+    </mat-list-item>
+  </mat-list> -->
+
+<div
+  [ngClass]="{
+    'sidebar-hidden': this.recUsersHidden,
+    'sidebar-open': !this.recUsersHidden
+  }"
+  class="mat-elevation-z6"
+  *ngIf="this.windowWidth > 775"
+>
+  <h3 *ngIf="!this.recUsersHidden" class="recommended-title">
+    Recommended Users
+  </h3>
+  <stream-preview
+    *ngFor="let user of this.recommendedUsers; let i = index"
+    [name]="user.name"
+    [category]="user.category"
+    [live]="user.live"
+    [uri]="user.uri"
+    [hidden]="this.recUsersHidden"
+  ></stream-preview>
+
+  <mat-icon
+    #toggle
+    *ngIf="!this.recUsersHidden; else usersHidden"
+    id="hide-menu-toggle"
+    aria-hidden="false"
+    aria-label="Hide Menu"
+    (click)="this.onToggleRecommendedUsers()"
+    >chevron_left
+  </mat-icon>
+
+  <stream-preview
+    *ngFor="let user of this.recommendedUsers; let i = index"
+    [name]="user.name"
+    [category]="user.category"
+    [live]="user.live"
+    [uri]="user.uri"
+    [hidden]="this.recUsersHidden"
+  ></stream-preview>
+</div>
+
+<div
+  [ngClass]="{
+    'main-container-sidebar-hidden': this.recUsersHidden,
+    'main-container-sidebar-open': !this.recUsersHidden
+  }"
+>
+  <router-outlet></router-outlet>
+</div>
+
+<ng-template #usersHidden>
+  <mat-icon
+    id="open-menu-toggle"
+    aria-hidden="false"
+    aria-label="Hide Menu"
+    (click)="this.onToggleRecommendedUsers()"
+    >chevron_right
+  </mat-icon>
+</ng-template>

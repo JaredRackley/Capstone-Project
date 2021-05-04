@@ -1,0 +1,9 @@
+# Meeting 8
+
+Attendance: 100%
+
+This week we mostly worked on our own cases while in the meetings. On Tuesday I managed to resolve my Github Actions issues by figuring out that I simply needed to CD into the directory with our Go files before running the build command. Apparently Go doesn't like building at a specific path and wants you to be in the directory instead. While this issue feels like a really stupid thing to get hung up on, I'm happy that I got it figured out so that in the future we can hopefully catch legitimate issues in code. The same fix applied to running tests as well.
+
+On Thursday I worked more on getting the Go RTMP server working, and also managed to make some progress. My issue before was that when I tried to open a stream, the server would deny it saying something about a non-existant application. I decided to dig into the source code and realized that there was a default configuration prooviding a default application. The client examples in the repository weren't using this default application, which led me to think it was an issue with the code. As it turns out though, once I figured out the right path to point OBS to, I was able to open up a stream no problem. I next had to test that it was working, so I connected to the stream using VLC (which has simple built-in RTMP support). I could see clearly the image that I was streaming from my computer. Since we don't care about video though, I decided to play some music and broadcast that. I opened up Spotify and started playing something. Before I knew it, I was listening to Spotify streaming on my desktop over RTMP to my laptop with perfect quality. This was a massive win in my book, though there is still a lot of work to be done before I can confidently say this library is the right choice.
+
+I am hoping that I can make some progress on some other pieces of the API, and maybe start integrating this RTMP server with it.

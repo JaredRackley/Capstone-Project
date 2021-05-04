@@ -1,0 +1,134 @@
+.menu {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  position: sticky;
+  z-index: 2;
+  top: 0;
+}
+
+.title {
+  margin-left: 0;
+  font-family: "Blinker";
+  text-decoration: none;
+}
+
+a {
+  margin-left: 24px;
+  color: white;
+}
+
+.menu-icons {
+  // pin to right side of screen
+  flex: 1;
+  text-align: right;
+  margin-top: 8px;
+  mat-icon {
+    cursor: pointer;
+    user-select: none;
+  }
+}
+
+.user-options {
+  padding-top: 0;
+  position: absolute;
+  right: 0;
+
+  mat-list-item {
+    border-bottom: 1px solid #333222;
+    padding: 5px;
+    background-color: #222831;
+    color: white;
+    width: auto;
+    text-align: center;
+    cursor: pointer;
+  }
+}
+
+@mixin user-container {
+  background-color: rgb(0, 255, 200);
+  float: left;
+  position: fixed;
+  height: 100%;
+}
+
+@mixin menu-toggle {
+  cursor: pointer;
+  user-select: none;
+  float: right;
+  font-size: 48;
+}
+
+.recommended-container {
+  @include user-container();
+}
+
+.recommended-title {
+  text-align: center;
+}
+
+.on-close {
+  width: 20px;
+}
+
+.recommended-icons {
+  display: block;
+  margin-bottom: 30px;
+  font-size: 40px;
+  width: 40px;
+  cursor: pointer;
+  user-select: none;
+}
+
+#hide-menu-toggle {
+  @include menu-toggle();
+}
+
+#open-menu-toggle {
+  @include menu-toggle();
+  position: relative;
+  margin-top: 54px;
+  top: 40%;
+}
+
+.sidebar-hidden {
+  @include user-container();
+  width: 24px;
+  transition: 0.3s;
+  border-radius: 24px;
+  height: 50%;
+  position: fixed;
+  margin-top: 200px;
+
+  .recommended-icons {
+    transition-delay: 250ms;
+    display: none;
+  }
+}
+
+.sidebar-open {
+  @include user-container();
+  width: 256px;
+  transition: 0.3s;
+
+  .recommended-icons {
+    transition-delay: 250ms;
+    display: block;
+  }
+}
+
+.options {
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.username-display {
+  font-size: 20px;
+  padding-right: 25px
+}
+
+#account-profile-pic {
+  width: 30px;
+  height:30px;
+  border-radius: 30px;
+}

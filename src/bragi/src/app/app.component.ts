@@ -1,0 +1,95 @@
+import { Component, HostListener, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthService } from './services/auth/auth.service';
+import firebase from "firebase";
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+
+export class AppComponent implements OnInit {
+
+  userData: firebase.User | undefined;
+  options = ["Dark Mode", "Register", "Login"];
+
+  constructor(
+    private fs: AngularFirestore,
+    public authService: AuthService
+  ) { }
+
+  windowWidth: number = window.innerWidth;
+  menuItems = [
+    {
+      option: "Signup",
+      icon: "person_add",
+      route: "/signup"
+    },
+    {
+      option: "Login",
+      route: "/login"
+    },
+    {
+      option: "Dark Mode",
+      icon: "brightness_medium"
+    }
+  ]
+  recommendedUsers = [
+    {
+      name: "xXTru3Gam3r69Xx",
+      category: "gaming",
+      live: true,
+      uri: "data:image/jpeg;base64,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"
+    },
+    {
+      name: "GamerGod",
+      category: "gaming",
+      live: false,
+      uri: "http://27.media.tumblr.com/VQ3vgxkGenifedu4KEDbDgZZo1_400.jpg"
+    },
+    {
+      name: "TitanXXX",
+      category: "ASMR",
+      live: false,
+      uri: "https://fastly.syfy.com/sites/syfy/files/styles/1200x680/public/2019/04/aothero.jpg?offset-x=0&offset-y=48"
+    },
+    {
+      name: "lilnasx",
+      category: "music",
+      live: true,
+      uri: "https://www.liveabout.com/thmb/NVdH2OxJFm83YXLAF0WS_FEaMxA=/767x640/filters:no_upscale():max_bytes(150000):strip_icc()/roughday-58b8aa1c5f9b58af5c51c9b0.png"
+    },
+    {
+      name: "jared",
+      category: "yodel-screaming",
+      live: false,
+      uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqDLXmTG-9daevG3ExpkctEPOvaJOII4DJCw&usqp=CAU"
+    },
+  ]
+  optionsShowing = false;
+  optionsOutsideClick = false;
+  recUsersHidden = false;
+  title = 'Sound Steam';
+
+  ngOnInit(): void {
+    this.authService.userDataObs.subscribe(u => {
+      this.userData = u;
+      // console.debug(u);
+    });
+  }
+
+  // function to handle clicking outside of user menu
+  optionsClickOutside(): void {
+    this.optionsOutsideClick = !this.optionsOutsideClick;
+  }
+
+  onToggleRecommendedUsers(): void {
+    this.recUsersHidden = !this.recUsersHidden;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.windowWidth = window.innerWidth;
+  }
+}

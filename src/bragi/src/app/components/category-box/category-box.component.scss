@@ -1,0 +1,29 @@
+.profile-image {
+    margin: 8px;
+}
+
+.category-container {
+    width: min-content;
+    display: inline-block;
+    margin-right: 24px;
+    h4 {
+        margin: 0;
+        margin-bottom: 8px;
+    }
+    button {
+        border-radius: 36px;
+        margin: 0 4px;
+        padding: 0 12px;
+        line-height: unset;
+        background-color: gray;
+        align-content: center;
+    }
+    img {
+        width: 230px;
+        height: 300px;
+        cursor: pointer;
+    }
+    .tags {
+        text-align: center;
+    }
+}
